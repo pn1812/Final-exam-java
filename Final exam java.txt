@@ -1,0 +1,72 @@
+public class Sale {
+    private String type;
+    private double price;
+    private Customer customer;
+
+    public Sale(String type, double price, Customer customer) {
+        this.type = type;
+        this.price = price;
+        this.customer = customer;
+    }
+
+    public double calculateTotal() {
+        double discount = customer.getDiscountRate() * price;
+        return price - discount;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+}
+public class Customer implements DiscountRate {
+    private String type;
+
+    public Customer(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public double getDiscountRate() {
+        switch(type) {
+            case "Premium":
+                return 0.20;
+            case "Gold":
+            case "Silver":
+                return 0.15;
+            default:
+                return 0.0;
+        }
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+}
+
+interface DiscountRate {
+    double getDiscountRate();
+}
